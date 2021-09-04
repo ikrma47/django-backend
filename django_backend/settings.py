@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'preference',
     'batch',
     'semester',
+    'helper',
     'rest_framework_simplejwt',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -155,3 +156,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'authentication.User'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'ghost.rider3327@gmail.com'
+EMAIL_HOST_PASSWORD = '03472414654'
