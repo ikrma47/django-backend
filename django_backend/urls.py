@@ -25,4 +25,5 @@ urlpatterns = [
     path('', include('experience.urls')),
     path('', include('batch.urls')),
     path('', include('preference.urls')),
+    path('', include('s3_signed_url')),
 ]

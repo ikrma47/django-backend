@@ -8,10 +8,11 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'cnic', 'password', 'isAdmin']
+        fields = ['email', 'cnic', 'password', 'isAdmin', 'otp']
         extra_kwargs = {
             'password': {'write_only': True},
-            'isAdmin': {'default': False}
+            'isAdmin': {'default': False},
+            'otp': { 'write_only': True}
         }
 
     def create(self, validated_data):
@@ -33,20 +34,46 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
     def validate(self, attrs):
-        data = super().validate(attrs)
+        super().validate(attrs)
+        if self.user.isVerified is True:
 
-        refresh = self.get_token(self.user)
+            refresh = self.get_token(self.user)
 
-        data = {
-            "success": True,
-            "message": "Logged In",
-            "data": [{
-                "email": self.user.email,
-                "isAdmin": self.user.isAdmin,
-                "appId": self.user.appId,
-                "access": str(refresh.access_token),
-                "refresh": str(refresh)
-            }]
+            return {
+                "success": True,
+                "message": "Logged In",
+                "data": [{
+                    "email": self.user.email,
+                    "isAdmin": self.user.isAdmin,
+                    "appId": self.user.appId,
+                    "access": str(refresh.access_token),
+                    "isVerified": self.user.isVerified,
+                    "refresh": str(refresh)
+                }]
+            }
+
+        if (self.user.email == self.initial_data['email'] and  
+            self.user.otp == self.initial_data.get('otp',None)
+        ):
+            User.objects.filter(
+                Q(email=self.initial_data['email']) | Q(otp=self.initial_data['otp'])
+            ).update(otp=None, isVerified=True)
+            refresh = self.get_token(self.user)
+            
+            return {
+                "success": True,
+                "message": "Logged In",
+                "data": [{
+                    "email": self.user.email,
+                    "isAdmin": self.user.isAdmin,
+                    "appId": self.user.appId,
+                    "access": str(refresh.access_token),
+                    "isVerified": self.user.isVerified,
+                    "refresh": str(refresh)
+                }]
+            }
+        return {
+            "success": False,
+            "message": "please verify your email first",
+            "data": [{"email":self.user.email}]
         }
-
-        return data
