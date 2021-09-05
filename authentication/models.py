@@ -12,7 +12,7 @@ class User(AbstractUser):
     last_name = None
     email = models.EmailField(max_length=70, unique=True)
     cnic = models.CharField(max_length=13, unique=True)
-    otp = models.CharField(max_length=6)
+    otp = models.CharField(max_length=6, null=True)
     isAdmin = models.BooleanField(default=False)
     isVerified = models.BooleanField(default=False)
     password = models.CharField(max_length=255)

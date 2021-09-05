@@ -1,2 +1,4 @@
 /env
 /**/__pycache__
+/django_backend/.env
+.DS_Store

@@ -64,3 +64,23 @@ class DetailsNestedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Details
         exclude = ['createdAt', 'updatedAt']
+
+class ImageSerializer(serializers.ModelSerializer):
+
+    user = RegisterUserSerializer(read_only=True)
+    phoneNumbers = PhoneNumbersSerializer(read_only=True)
+    address = AddressSerializer(read_only=True)
+    class Meta:
+        model = Details
+        fields = ['id','name', 'fatherName', 'dob', 'domicile', 'religion', 'image', 'courseCategory','user', 'phoneNumbers', 'address']
+        read_only_fields = ('id','name', 'fatherName', 'dob', 'domicile', 'religion', 'courseCategory')
+
+class CourseCategorySerializer(serializers.ModelSerializer):
+
+    user = RegisterUserSerializer(read_only=True)
+    phoneNumbers = PhoneNumbersSerializer(read_only=True)
+    address = AddressSerializer(read_only=True)
+    class Meta:
+        model = Details
+        fields = ['id','name', 'fatherName', 'dob', 'domicile', 'religion', 'image', 'courseCategory','user', 'phoneNumbers', 'address']
+        read_only_fields = ('id','name', 'fatherName', 'dob', 'domicile', 'religion', 'image')
