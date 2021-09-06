@@ -66,7 +66,7 @@ class LoginAndObtainTokenSerializer(TokenObtainPairSerializer):
 
             details_instance = Details.objects.create(user=self.user)
             PhoneNumbers.objects.create(details=details_instance)
-            Details.objects.create(details=details_instance)
+            Address.objects.create(details=details_instance)
             
             for exam_year in ExamYear.objects.all():
                 academic_instance = Academics.objects.create()
