@@ -24,16 +24,7 @@ class DetailsSerializer(serializers.ModelSerializer):
         model = Details
         exclude = ['createdAt', 'updatedAt']
         read_only_fields = ['image']
-
-    def create(self, validated_data):
-        phoneNumbers = validated_data.pop('phoneNumbers', None)
-        address = validated_data.pop('address', None)
-        details = Details.objects.create(**validated_data)
-        if phoneNumbers is not None:
-            PhoneNumbers.objects.create(details=details, **phoneNumbers)
-        if address is not None:
-            Address.objects.create(details=details, ** address)
-        return details
+        
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
