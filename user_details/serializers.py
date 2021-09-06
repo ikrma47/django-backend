@@ -23,6 +23,7 @@ class DetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Details
         exclude = ['createdAt', 'updatedAt']
+        read_only_fields = ['image']
 
     def create(self, validated_data):
         phoneNumbers = validated_data.pop('phoneNumbers', None)
@@ -41,7 +42,6 @@ class DetailsSerializer(serializers.ModelSerializer):
         instance.dob = validated_data.get('dob', instance.dob)
         instance.domicile = validated_data.get('domicile', instance.domicile)
         instance.religion = validated_data.get('religion', instance.religion)
-        instance.image = validated_data.get('image', instance.image)
         instance.courseCategory = validated_data.get(
             'courseCategory', instance.courseCategory)
         instance.address.mailingAddress = validated_data['address'].get(
