@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import User
-from user_details.models import Details
+from user_details.models import Details, PhoneNumbers, Address
 from experience.models import Experience
 from academics.models import UserAcademicRecord, Academics, ExamYear
 from django.db.models import Q
@@ -64,7 +64,9 @@ class LoginAndObtainTokenSerializer(TokenObtainPairSerializer):
 
             # intializing candidate related models
 
-            Details.objects.create(user=self.user)
+            details_instance = Details.objects.create(user=self.user)
+            PhoneNumbers.objects.create(details=details_instance)
+            Details.objects.create(details=details_instance)
             
             for exam_year in ExamYear.objects.all():
                 academic_instance = Academics.objects.create()
