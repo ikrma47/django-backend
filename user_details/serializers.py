@@ -23,7 +23,7 @@ class DetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Details
         exclude = ['createdAt', 'updatedAt']
-        read_only_fields = ['image']
+        read_only_fields = ['image','courseCategory']
         
 
     def update(self, instance, validated_data):
