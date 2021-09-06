@@ -9,9 +9,9 @@ class Experience(models.Model):
     id = models.AutoField(primary_key=True)
     jobTitle = models.CharField(max_length=50)
     organization = models.CharField(max_length=100)
-    start = models.DateField()
-    end = models.DateField()
-    salary = models.IntegerField()
+    start = models.DateField(null=True)
+    end = models.DateField(null=True)
+    salary = models.IntegerField(null=True)
     duty = models.CharField(max_length=50)
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="experiences")
