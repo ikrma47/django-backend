@@ -132,7 +132,7 @@ class VerifyEmailAndObtainTokenSerializer(TokenObtainPairSerializer):
                     "isAdmin": self.user.isAdmin,
                     "appId": self.user.appId,
                     "access": str(refresh.access_token),
-                    "isVerified": self.user.isVerified,
+                    "isVerified": True,
                     "refresh": str(refresh)
                 }]
             }
