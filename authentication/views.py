@@ -2,7 +2,7 @@ from rest_framework import viewsets, mixins, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import User
-from .serializers import RegisterUserSerializer, MyTokenObtainPairSerializer
+from .serializers import RegisterUserSerializer, LoginAndObtainTokenSerializer, VerifyEmailAndObtainTokenSerializer
 from helper.functions import generateOtp
 from django.core.mail import send_mail
 from django.conf import settings
@@ -39,7 +39,23 @@ class SignupView(viewsets.GenericViewSet, mixins.CreateModelMixin):
 
 
 class LoginView(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
+    serializer_class = LoginAndObtainTokenSerializer
+    
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
+        try:
+            serializer.is_valid(raise_exception=True)
+        except TokenError as e:
+            raise InvalidToken(e.args[0])
+        if serializer.validated_data['success'] is True:
+            return Response(serializer.validated_data, status=status.HTTP_200_OK)
+
+        return Response(serializer.validated_data, status=status.HTTP_423_LOCKED)
+
+
+class VerifyEmailView(TokenObtainPairView):
+    serializer_class = VerifyEmailAndObtainTokenSerializer
     
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime
 from django.conf import settings
 
 
@@ -8,7 +7,7 @@ class Details(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=70)
     fatherName = models.CharField(max_length=70)
-    dob = models.DateField(max_length=10)
+    dob = models.DateField(max_length=10,null=True)
     domicile = models.CharField(max_length=30)
     religion = models.CharField(max_length=20)
     image = models.CharField(max_length=255)
