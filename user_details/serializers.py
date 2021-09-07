@@ -23,10 +23,11 @@ class DetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Details
         exclude = ['createdAt', 'updatedAt']
-        read_only_fields = ['image','courseCategory']
-        
+        read_only_fields = ['image', 'courseCategory']
 
     def update(self, instance, validated_data):
+        phoneNumbers = instance.phoneNumbers
+        address = instance.address
         instance.name = validated_data.get('name', instance.name)
         instance.fatherName = validated_data.get(
             'fatherName', instance.fatherName)
@@ -35,43 +36,53 @@ class DetailsSerializer(serializers.ModelSerializer):
         instance.religion = validated_data.get('religion', instance.religion)
         instance.courseCategory = validated_data.get(
             'courseCategory', instance.courseCategory)
-        instance.address.mailingAddress = validated_data['address'].get(
-            'address', instance.address.mailingAddress)
-        instance.address.residentialAddress = validated_data['address'].get(
-            'address', instance.address.residentialAddress)
-        instance.phoneNumbers.primaryPhoneNumber = validated_data['phoneNumbers'].get(
-            'primaryPhoneNumber', instance.phoneNumbers.primaryPhoneNumber)
-        instance.phoneNumbers.secondaryPhoneNumber = validated_data['phoneNumbers'].get(
-            'secondaryPhoneNumber', instance.phoneNumbers.secondaryPhoneNumber)
+        address.mailingAddress = validated_data['address'].get(
+            'mailingAddress', address.mailingAddress)
+        address.residentialAddress = validated_data['address'].get(
+            'residentialAddress', address.residentialAddress)
+        phoneNumbers.primaryPhoneNumber = validated_data['phoneNumbers'].get(
+            'primaryPhoneNumber', phoneNumbers.primaryPhoneNumber)
+        phoneNumbers.secondaryPhoneNumber = validated_data['phoneNumbers'].get(
+            'secondaryPhoneNumber', phoneNumbers.secondaryPhoneNumber)
+        address.save()
+        phoneNumbers.save()
         instance.save()
         return instance
 
 
 class DetailsNestedSerializer(serializers.ModelSerializer):
-    user = RegisterUserSerializer()
-    phoneNumbers = PhoneNumbersSerializer()
-    address = AddressSerializer()
+    user = RegisterUserSerializer(read_only=True)
+    phoneNumbers = PhoneNumbersSerializer(read_only=True)
+    address = AddressSerializer(read_only=True)
 
     class Meta:
         model = Details
         exclude = ['createdAt', 'updatedAt']
+
 
 class ImageSerializer(serializers.ModelSerializer):
 
     user = RegisterUserSerializer(read_only=True)
     phoneNumbers = PhoneNumbersSerializer(read_only=True)
     address = AddressSerializer(read_only=True)
+
     class Meta:
         model = Details
-        fields = ['id','name', 'fatherName', 'dob', 'domicile', 'religion', 'image', 'courseCategory','user', 'phoneNumbers', 'address']
-        read_only_fields = ('id','name', 'fatherName', 'dob', 'domicile', 'religion', 'courseCategory')
+        fields = ['id', 'name', 'fatherName', 'dob', 'domicile', 'religion',
+                  'image', 'courseCategory', 'user', 'phoneNumbers', 'address']
+        read_only_fields = ('id', 'name', 'fatherName', 'dob',
+                            'domicile', 'religion', 'courseCategory')
+
 
 class CourseCategorySerializer(serializers.ModelSerializer):
 
     user = RegisterUserSerializer(read_only=True)
     phoneNumbers = PhoneNumbersSerializer(read_only=True)
     address = AddressSerializer(read_only=True)
+
     class Meta:
         model = Details
-        fields = ['id','name', 'fatherName', 'dob', 'domicile', 'religion', 'image', 'courseCategory','user', 'phoneNumbers', 'address']
-        read_only_fields = ('id','name', 'fatherName', 'dob', 'domicile', 'religion', 'image')
+        fields = ['id', 'name', 'fatherName', 'dob', 'domicile', 'religion',
+                  'image', 'courseCategory', 'user', 'phoneNumbers', 'address']
+        read_only_fields = ('id', 'name', 'fatherName',
+                            'dob', 'domicile', 'religion', 'image')
