@@ -6,4 +6,4 @@ class DocumentsSerializer(ModelSerializer):
 
     class Meta:
         model = Documents
-        exclude = ['updatedAt', 'createdAt']
+        exclude = ['updatedAt', 'created_at']
