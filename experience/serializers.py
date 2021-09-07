@@ -7,4 +7,3 @@ class ExperienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experience
         exclude = ['createdAt', 'updatedAt']
-        lookup_field = 'user'

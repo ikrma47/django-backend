@@ -12,6 +12,7 @@ class DetailsViewSet(viewsets.ModelViewSet):
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    lookup_field = 'user'
 
     queryset = Details.objects.all()
     serializer_class = DetailsSerializer

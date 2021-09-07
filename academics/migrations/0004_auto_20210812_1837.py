@@ -11,9 +11,9 @@ def code(apps, schema_editor):
         ExamYear(examination="First Year"),
         ExamYear(examination="Second Year"),
         ExamYear(examination="Third Year"),
-        ExamYear(examination="Fourth Year"),
-        ExamYear(examination="Fifth Year"),
-        ExamYear(examination="Sixth Year"),
+        ExamYear(examination="Final Year"),
+        ExamYear(examination="GAT"),
+        ExamYear(examination="MS"),
     ])
 
 
@@ -24,9 +24,9 @@ def reverse_code(apps, schema_editor):
     ExamYear.objects.using(db_alias).filter(examination="First Year").delete()
     ExamYear.objects.using(db_alias).filter(examination="Second Year").delete()
     ExamYear.objects.using(db_alias).filter(examination="Third Year").delete()
-    ExamYear.objects.using(db_alias).filter(examination="Fourth Year").delete()
-    ExamYear.objects.using(db_alias).filter(examination="Fifth Year").delete()
-    ExamYear.objects.using(db_alias).filter(examination="Sixth Year").delete()
+    ExamYear.objects.using(db_alias).filter(examination="Final Year").delete()
+    ExamYear.objects.using(db_alias).filter(examination="GAT").delete()
+    ExamYear.objects.using(db_alias).filter(examination="MS").delete()
 
 
 class Migration(migrations.Migration):
