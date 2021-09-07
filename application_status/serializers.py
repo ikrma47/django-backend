@@ -6,4 +6,4 @@ class ApplicationStatusSerializer(ModelSerializer):
 
     class Meta:
         model = ApplicationStatus
-        fields = '__all__'
+        exclude = ['updatedAt', 'createdAt']
