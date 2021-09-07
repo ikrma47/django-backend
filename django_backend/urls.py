@@ -27,4 +27,5 @@ urlpatterns = [
     path('', include('preference.urls')),
     path('', include('s3_signed_url.urls')),
     path('', include('application_status.urls')),
+    path('', include('documents.urls')),
 ]
