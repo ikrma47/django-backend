@@ -12,6 +12,7 @@ class ExperienceViewSet(viewsets.ModelViewSet):
     serializer_class = ExperienceSerializer
     lookup_field = 'user'
 
+    # override get_object specifically for retrieve method to retrieve all experiences of a user
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
         lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
