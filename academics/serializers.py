@@ -26,15 +26,10 @@ class UserAcademicRecordPlainSerializer(serializers.ModelSerializer):
 
 
 class UserAcademicRecordNestedSerializer(serializers.ModelSerializer):
-    academics = AcademicsSerializer()
+    academics = AcademicsSerializer(read_only=True)
     examYear = ExamYearSerializer(read_only=True)
 
     class Meta:
         model = UserAcademicRecord
         exclude = ['createdAt', 'updatedAt']
         lookup_field = 'user'
-
-    def create(self, validated_data):
-        academics = validated_data.pop('academics')
-        academics = Academics.objects.create(**academics)
-        return UserAcademicRecord.objects.create(academics=academics, **validated_data)
