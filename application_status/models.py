@@ -35,6 +35,6 @@ class ApplicationStatus(models.Model):
     isAccepted = models.BooleanField(default=False, null=False)
     comments = models.CharField(max_length=255, null=True)
     acceptedBy = models.CharField(max_length=50, null=True)
-    rejectedBy = models.BooleanField(max_length=50, null=True)
+    rejectedBy = models.CharField(max_length=50, null=True)
     updatedAt = models.DateTimeField(auto_now=True)
     createdAt = models.DateTimeField(auto_now_add=True)
