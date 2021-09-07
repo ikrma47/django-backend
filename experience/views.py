@@ -1,5 +1,7 @@
 from rest_framework import viewsets
 from django.shortcuts import get_list_or_404, get_object_or_404
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Experience
 from .serializers import ExperienceSerializer
 from rest_framework.response import Response
@@ -8,6 +10,10 @@ from rest_framework.response import Response
 # Create your views here.
 
 class ExperienceViewSet(viewsets.ModelViewSet):
+
+    permission_classes = [JWTAuthentication]
+    authentication_classes = [IsAuthenticated]
+
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
     lookup_field = 'user'
