@@ -7,7 +7,7 @@ from authentication.models import User
 class ApplicationStatus(models.Model):
 
     appId = models.OneToOneField(
-        to=User, on_delete=models.CASCADE, related_name='applicationStatus')
+        to=User, on_delete=models.CASCADE, related_name='applicationStatus', primary_key=True)
     isProfile = models.BooleanField(default=False, null=False)
     isCourseCategory = models.BooleanField(default=False, null=False)
     isFirstYear = models.BooleanField(default=False, null=False)
