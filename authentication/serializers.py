@@ -88,8 +88,6 @@ class VerifyEmailAndObtainTokenSerializer(TokenObtainPairSerializer):
             for exam_year in ExamYear.objects.all():
                 academic_instance = Academics.objects.create()
                 UserAcademicRecord.objects.create(examYear=exam_year, academics=academic_instance,user=self.user)
-                
-            Experience.objects.create(user=self.user)
 
             refresh = self.get_token(self.user)
             
