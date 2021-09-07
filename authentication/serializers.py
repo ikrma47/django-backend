@@ -2,7 +2,6 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import User
 from user_details.models import Details, PhoneNumbers, Address
-from experience.models import Experience
 from academics.models import UserAcademicRecord, Academics, ExamYear
 from django.db.models import Q
 
