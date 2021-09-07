@@ -23,6 +23,7 @@ class UserAcademicRecordView(viewsets.GenericViewSet, mixins.UpdateModelMixin, m
             return self.serializer_class
         return UserAcademicRecordPlainSerializer
 
+    # overriding get_object specifically for retrieve method to retrieve all academics of a user
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
         lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
