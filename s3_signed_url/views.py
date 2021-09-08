@@ -17,4 +17,8 @@ class GetPreSignedUrl(APIView):
 
     def post(self, request, fromat=None):
         response = create_presigned_url(request.data['fileName'])
-        return Response(status=HTTP_200_OK, data=response)
+        return Response(status=HTTP_200_OK, data={
+            'success': True,
+            'message': 'signed url obtained',
+            'data': [response]
+        })
