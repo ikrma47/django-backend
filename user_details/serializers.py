@@ -17,6 +17,7 @@ class PhoneNumbersSerializer(serializers.ModelSerializer):
 
 class DetailsSerializer(serializers.ModelSerializer):
 
+    user = RegisterUserSerializer(read_only=True)
     phoneNumber = PhoneNumbersSerializer()
     address = AddressSerializer()
 
@@ -48,16 +49,6 @@ class DetailsSerializer(serializers.ModelSerializer):
         phoneNumber.save()
         instance.save()
         return instance
-
-
-class DetailsNestedSerializer(serializers.ModelSerializer):
-    user = RegisterUserSerializer(read_only=True)
-    phoneNumber = PhoneNumbersSerializer(read_only=True)
-    address = AddressSerializer(read_only=True)
-
-    class Meta:
-        model = Details
-        exclude = ['createdAt', 'updatedAt']
 
 
 class ImageSerializer(serializers.ModelSerializer):
