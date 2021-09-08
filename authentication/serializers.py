@@ -12,8 +12,9 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'cnic', 'password', 'isAdmin', 'otp']
+        fields = ['appId', 'email', 'cnic', 'password', 'isAdmin', 'otp']
         extra_kwargs = {
+            'appId': {'read_only': True},
             'password': {'write_only': True},
             'isAdmin': {'default': False},
             'otp': {'write_only': True}
