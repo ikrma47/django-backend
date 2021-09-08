@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     's3_signed_url',
     'application_status',
     'documents',
+    'user_dashboard',
     'rest_framework_simplejwt',
     'django.contrib.admin',
     'django.contrib.auth',
