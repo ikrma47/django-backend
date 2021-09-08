@@ -7,7 +7,7 @@ class Details(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=70)
     fatherName = models.CharField(max_length=70)
-    dob = models.DateField(max_length=10,null=True)
+    dob = models.DateField(max_length=10, null=True)
     domicile = models.CharField(max_length=30)
     religion = models.CharField(max_length=20)
     image = models.CharField(max_length=255)
@@ -15,7 +15,7 @@ class Details(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
     user = models.OneToOneField(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='details')
+        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='detail')
 
 
 class PhoneNumbers(models.Model):
