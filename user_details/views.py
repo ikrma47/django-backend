@@ -36,6 +36,7 @@ class UpdateImage(viewsets.GenericViewSet, mixins.UpdateModelMixin):
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    lookup_field = 'user'
 
     queryset = Details.objects.all()
     serializer_class = ImageSerializer
@@ -45,6 +46,7 @@ class UpdateCourseCategory(viewsets.GenericViewSet, mixins.UpdateModelMixin):
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    lookup_field = 'user'
 
     queryset = Details.objects.all()
     serializer_class = CourseCategorySerializer
