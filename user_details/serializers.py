@@ -60,7 +60,7 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Details
         fields = ['id', 'name', 'fatherName', 'dob', 'domicile', 'religion',
-                  'image', 'courseCategory', 'user', 'phoneNumbers', 'address']
+                  'image', 'courseCategory', 'user', 'phoneNumber', 'address']
         read_only_fields = ('id', 'name', 'fatherName', 'dob',
                             'domicile', 'religion', 'courseCategory')
 
@@ -74,6 +74,6 @@ class CourseCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Details
         fields = ['id', 'name', 'fatherName', 'dob', 'domicile', 'religion',
-                  'image', 'courseCategory', 'user', 'phoneNumbers', 'address']
+                  'image', 'courseCategory', 'user', 'phoneNumber', 'address']
         read_only_fields = ('id', 'name', 'fatherName',
                             'dob', 'domicile', 'religion', 'image')
