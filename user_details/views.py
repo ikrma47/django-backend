@@ -1,7 +1,7 @@
 from rest_framework import viewsets, mixins
 from rest_framework.response import Response
 from .models import Details, PhoneNumbers, Address
-from .serializers import CourseCategorySerializer, DetailsSerializer, DetailsNestedSerializer, ImageSerializer
+from .serializers import CourseCategorySerializer, DetailsSerializer, ImageSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -16,11 +16,6 @@ class DetailsViewSet(viewsets.ModelViewSet):
 
     queryset = Details.objects.all()
     serializer_class = DetailsSerializer
-
-    def get_serializer_class(self):
-        if self.action == 'list' or self.action == 'retrieve':
-            return DetailsNestedSerializer
-        return self.serializer_class
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
