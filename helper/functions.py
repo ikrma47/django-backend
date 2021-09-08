@@ -1,18 +1,18 @@
+from rest_framework.views import exception_handler
 from django.conf import settings
 from random import randint
 import logging
 import boto3
 from botocore.exceptions import ClientError
 
+
 def generateOtp():
-    return randint(1000,9999)
-
-
+    return randint(1000, 9999)
 
 
 def create_presigned_url(object_name, bucket_name=settings.BUCKET_NAME, expiration=3600):
     """Generate a presigned URL S3 POST request to upload a file
-    
+
     :return: Dictionary with the following keys:
         url: URL to post to
         fields: Dictionary of form fields and values to submit with the POST
@@ -20,10 +20,10 @@ def create_presigned_url(object_name, bucket_name=settings.BUCKET_NAME, expirati
     """
 
     # Generate a presigned S3 POST URL
-    s3_client = boto3.client('s3',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                            region_name=settings.AWS_REGION_NAME
-    )
+    s3_client = boto3.client('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                             region_name=settings.AWS_REGION_NAME
+                             )
     try:
         response = s3_client.generate_presigned_url('put_object',
                                                     Params={'Bucket': bucket_name,
@@ -34,4 +34,18 @@ def create_presigned_url(object_name, bucket_name=settings.BUCKET_NAME, expirati
         return None
 
     # The response contains the presigned URL and required fields
+    return response
+
+
+def custom_exception_handler(exc, context):
+    # Call REST framework's default exception handler first,
+    # to get the standard error response.
+    response = exception_handler(exc, context)
+
+    # Now add the HTTP status code to the response.
+    if response is not None:
+        response.data['success'] = False
+        response.data['message'] = response.data.pop('detail')
+        response.data['data'] = []
+
     return response
