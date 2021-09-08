@@ -63,7 +63,7 @@ class DetailsNestedSerializer(serializers.ModelSerializer):
 class ImageSerializer(serializers.ModelSerializer):
 
     user = RegisterUserSerializer(read_only=True)
-    phoneNumbers = PhoneNumbersSerializer(read_only=True)
+    phoneNumber = PhoneNumbersSerializer(read_only=True)
     address = AddressSerializer(read_only=True)
 
     class Meta:
