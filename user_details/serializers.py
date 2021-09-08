@@ -26,7 +26,7 @@ class DetailsSerializer(serializers.ModelSerializer):
         read_only_fields = ['image', 'courseCategory']
 
     def update(self, instance, validated_data):
-        phoneNumber = instance.phoneNumbers
+        phoneNumber = instance.phoneNumber
         address = instance.address
         instance.name = validated_data.get('name', instance.name)
         instance.fatherName = validated_data.get(
