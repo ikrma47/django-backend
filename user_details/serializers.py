@@ -17,7 +17,7 @@ class PhoneNumbersSerializer(serializers.ModelSerializer):
 
 class DetailsSerializer(serializers.ModelSerializer):
 
-    phoneNumbers = PhoneNumbersSerializer()
+    phoneNumber = PhoneNumbersSerializer()
     address = AddressSerializer()
 
     class Meta:
