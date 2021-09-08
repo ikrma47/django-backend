@@ -50,7 +50,7 @@ class LoginAndObtainTokenSerializer(TokenObtainPairSerializer):
                     "email": self.user.email,
                     "isAdmin": self.user.isAdmin,
                     "appId": self.user.appId,
-                    "access": str(refresh.access_token),
+                    "token": str(refresh.access_token),
                     "isVerified": self.user.isVerified,
                     "refresh": str(refresh)
                 }]
@@ -103,7 +103,7 @@ class VerifyEmailAndObtainTokenSerializer(TokenObtainPairSerializer):
                     "email": self.user.email,
                     "isAdmin": self.user.isAdmin,
                     "appId": self.user.appId,
-                    "access": str(refresh.access_token),
+                    "token": str(refresh.access_token),
                     "isVerified": True,
                     "refresh": str(refresh)
                 }]
