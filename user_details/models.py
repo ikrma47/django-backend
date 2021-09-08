@@ -22,7 +22,7 @@ class PhoneNumbers(models.Model):
 
     id = models.AutoField(primary_key=True)
     details = models.OneToOneField(
-        to=Details, related_name='phoneNumbers', on_delete=models.CASCADE)
+        to=Details, related_name='phoneNumber', on_delete=models.CASCADE)
     primaryPhoneNumber = models.CharField(max_length=20)
     secondaryPhoneNumber = models.CharField(max_length=20)
     createdAt = models.DateTimeField(auto_now_add=True)
