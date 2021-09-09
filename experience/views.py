@@ -35,7 +35,7 @@ class ExperienceViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins
         return Response(data={
             'success': True,
             'message': 'Academics updated successfully',
-            'data': [serializer.data]
+            'data': serializer.data
         })
 
     def destroy(self, request, *args, **kwargs):
