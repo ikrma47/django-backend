@@ -22,9 +22,9 @@ class Academics(models.Model):
     obtainedMarks = models.CharField(max_length=3)
     maxMarks = models.CharField(max_length=4)
     cgpa = models.CharField(max_length=4)
-    awards = models.CharField(max_length=255, null=True)
+    awards = models.CharField(max_length=255, null=True, default="")
     majors = models.CharField(max_length=255)
-    institue = models.CharField(max_length=255)
+    institue = models.CharField(max_length=255, default="")
     examYear = models.ManyToManyField(
         to=ExamYear,
         through='UserAcademicRecord',
