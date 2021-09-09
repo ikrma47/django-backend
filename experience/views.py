@@ -9,7 +9,7 @@ from rest_framework.response import Response
 
 # Create your views here.
 
-class ExperienceViewSet(viewsets.ModelViewSet):
+class ExperienceViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.DestroyModelMixin):
 
     permission_classes = [JWTAuthentication]
     authentication_classes = [IsAuthenticated]
