@@ -11,8 +11,8 @@ from rest_framework.response import Response
 
 class ExperienceViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.DestroyModelMixin):
 
-    permission_classes = [JWTAuthentication]
-    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
