@@ -24,6 +24,7 @@ class Academics(models.Model):
     cgpa = models.CharField(max_length=4)
     awards = models.CharField(max_length=255)
     majors = models.CharField(max_length=255)
+    institue = models.CharField(max_length=255)
     examYear = models.ManyToManyField(
         to=ExamYear,
         through='UserAcademicRecord',
