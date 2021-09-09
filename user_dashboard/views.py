@@ -15,6 +15,7 @@ class DashboardView(viewsets.GenericViewSet, mixins.RetrieveModelMixin):
 
     serializer_class = DashboardSerializer
     queryset = Details.objects.all()
+    lookup_field = 'user'
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
