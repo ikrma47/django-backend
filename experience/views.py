@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -32,4 +32,8 @@ class ExperienceViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         instances = self.get_object()
         serializer = self.get_serializer(instance=instances, many=True)
-        return Response(data=serializer.data)
+        return Response(data={
+            'success': True,
+            'message': 'Academics updated successfully',
+            'data': [serializer.data]
+        })
