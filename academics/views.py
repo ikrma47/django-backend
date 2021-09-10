@@ -32,4 +32,21 @@ class UserAcademicRecordView(viewsets.GenericViewSet, mixins.UpdateModelMixin, m
     def retrieve(self, request, *args, **kwargs):
         instances = self.get_object()
         serializer = self.get_serializer(many=True, instance=instances)
-        return Response(data=serializer.data)
+        return Response(data={
+            'success': True,
+            'message': 'Academics details fetched',
+            'data': serializer.data
+        })
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        # retrieving academics records of user after updating a specific one
+        self.action = 'retrieve'
+        self.kwargs[self.lookup_field] = serializer.data['user']
+        return self.retrieve(request, args, kwargs)
