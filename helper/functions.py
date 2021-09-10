@@ -64,7 +64,8 @@ def custom_exception_handler(exc, context):
     # Now add the HTTP status code to the response.
     if response is not None:
         response.data['success'] = False
-        response.data['message'] = response.data.pop('detail')
+        response.data['message'] = response.data.pop(
+            'detail', "Internal Error")
         response.data['data'] = []
 
     return response
