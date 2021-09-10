@@ -34,7 +34,7 @@ class ExperienceViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins
         serializer = self.get_serializer(instance=instances, many=True)
         return Response(data={
             'success': True,
-            'message': 'Academics updated successfully',
+            'message': 'Experience fetched successfully',
             'data': serializer.data
         })
 
@@ -43,6 +43,15 @@ class ExperienceViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT, data={
             'success': True,
-            'message': "deleted successfully",
+            'message': "Experience deleted successfully",
             'data': []
         })
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        self.action = 'retrieve'
+        self.kwargs[self.lookup_field] = serializer.data['user']
+        return self.retrieve(request, args, kwargs)
