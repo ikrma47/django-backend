@@ -1,7 +1,7 @@
 from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework import mixins, viewsets
 from rest_framework.response import Response
-from .serializers import UserAcademicRecordNestedSerializer, UserAcademicRecordPlainSerializer
+from .serializers import UserAcademicRecordSerializer
 from .models import UserAcademicRecord
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -15,13 +15,8 @@ class UserAcademicRecordView(viewsets.GenericViewSet, mixins.UpdateModelMixin, m
     permission_classes = [IsAuthenticated]
 
     queryset = UserAcademicRecord.objects.all()
-    serializer_class = UserAcademicRecordNestedSerializer
+    serializer_class = UserAcademicRecordSerializer
     lookup_field = 'user'
-
-    def get_serializer_class(self):
-        if self.action == 'list' or self.action == 'retrieve':
-            return self.serializer_class
-        return UserAcademicRecordPlainSerializer
 
     # overriding get_object specifically for retrieve method to retrieve all academics of a user
     def get_object(self):
