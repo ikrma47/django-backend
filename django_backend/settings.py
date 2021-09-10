@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'documents',
     'user_dashboard',
     'admin_dashboard',
+    'django_filters',
     'corsheaders',
     'rest_framework_simplejwt',
     'django.contrib.admin',
