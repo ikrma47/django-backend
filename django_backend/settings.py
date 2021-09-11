@@ -38,6 +38,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Application definition
 
 INSTALLED_APPS = [
+    'django_heroku',
     'rest_framework',
     'authentication',
     'user_details',
