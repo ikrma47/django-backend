@@ -7,6 +7,9 @@ class AcademicsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Academics
         exclude = ['examYear', 'createdAt', 'updatedAt']
+        extra_kwargs = {
+            'awards': {'allow_blank': True, 'default': ""}
+        }
 
 
 class ExamYearSerializer(serializers.ModelSerializer):
@@ -16,14 +19,14 @@ class ExamYearSerializer(serializers.ModelSerializer):
         exclude = ['createdAt', 'updatedAt']
 
 
-class UserAcademicRecordPlainSerializer(serializers.ModelSerializer):
+class UserAcademicRecordSerializer(serializers.ModelSerializer):
     academics = AcademicsSerializer()
+    examYear = ExamYearSerializer(read_only=True)
 
     class Meta:
         model = UserAcademicRecord
         exclude = ['createdAt', 'updatedAt']
-        read_only_fields = ['user', 'examYear']
-        lookup_field = 'user'
+        read_only_fields = ['user', 'examYear', 'id']
 
     def update(self, instance, validated_data):
         academics = instance.academics
@@ -39,16 +42,8 @@ class UserAcademicRecordPlainSerializer(serializers.ModelSerializer):
             'awards', academics.awards)
         academics.majors = validated_data['academics'].get(
             'majors', academics.majors)
+        academics.institute = validated_data['academics'].get(
+            'institute', academics.institute)
 
         academics.save()
         return instance
-
-
-class UserAcademicRecordNestedSerializer(serializers.ModelSerializer):
-    academics = AcademicsSerializer(read_only=True)
-    examYear = ExamYearSerializer(read_only=True)
-
-    class Meta:
-        model = UserAcademicRecord
-        exclude = ['createdAt', 'updatedAt']
-        lookup_field = 'user'

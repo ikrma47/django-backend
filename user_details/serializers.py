@@ -17,7 +17,8 @@ class PhoneNumbersSerializer(serializers.ModelSerializer):
 
 class DetailsSerializer(serializers.ModelSerializer):
 
-    phoneNumbers = PhoneNumbersSerializer()
+    user = RegisterUserSerializer(read_only=True)
+    phoneNumber = PhoneNumbersSerializer()
     address = AddressSerializer()
 
     class Meta:
@@ -26,7 +27,7 @@ class DetailsSerializer(serializers.ModelSerializer):
         read_only_fields = ['image', 'courseCategory']
 
     def update(self, instance, validated_data):
-        phoneNumbers = instance.phoneNumbers
+        phoneNumber = instance.phoneNumber
         address = instance.address
         instance.name = validated_data.get('name', instance.name)
         instance.fatherName = validated_data.get(
@@ -40,36 +41,26 @@ class DetailsSerializer(serializers.ModelSerializer):
             'mailingAddress', address.mailingAddress)
         address.residentialAddress = validated_data['address'].get(
             'residentialAddress', address.residentialAddress)
-        phoneNumbers.primaryPhoneNumber = validated_data['phoneNumbers'].get(
-            'primaryPhoneNumber', phoneNumbers.primaryPhoneNumber)
-        phoneNumbers.secondaryPhoneNumber = validated_data['phoneNumbers'].get(
-            'secondaryPhoneNumber', phoneNumbers.secondaryPhoneNumber)
+        phoneNumber.primaryPhoneNumber = validated_data['phoneNumber'].get(
+            'primaryPhoneNumber', phoneNumber.primaryPhoneNumber)
+        phoneNumber.secondaryPhoneNumber = validated_data['phoneNumber'].get(
+            'secondaryPhoneNumber', phoneNumber.secondaryPhoneNumber)
         address.save()
-        phoneNumbers.save()
+        phoneNumber.save()
         instance.save()
         return instance
-
-
-class DetailsNestedSerializer(serializers.ModelSerializer):
-    user = RegisterUserSerializer(read_only=True)
-    phoneNumbers = PhoneNumbersSerializer(read_only=True)
-    address = AddressSerializer(read_only=True)
-
-    class Meta:
-        model = Details
-        exclude = ['createdAt', 'updatedAt']
 
 
 class ImageSerializer(serializers.ModelSerializer):
 
     user = RegisterUserSerializer(read_only=True)
-    phoneNumbers = PhoneNumbersSerializer(read_only=True)
+    phoneNumber = PhoneNumbersSerializer(read_only=True)
     address = AddressSerializer(read_only=True)
 
     class Meta:
         model = Details
         fields = ['id', 'name', 'fatherName', 'dob', 'domicile', 'religion',
-                  'image', 'courseCategory', 'user', 'phoneNumbers', 'address']
+                  'image', 'courseCategory', 'user', 'phoneNumber', 'address']
         read_only_fields = ('id', 'name', 'fatherName', 'dob',
                             'domicile', 'religion', 'courseCategory')
 
@@ -77,12 +68,12 @@ class ImageSerializer(serializers.ModelSerializer):
 class CourseCategorySerializer(serializers.ModelSerializer):
 
     user = RegisterUserSerializer(read_only=True)
-    phoneNumbers = PhoneNumbersSerializer(read_only=True)
+    phoneNumber = PhoneNumbersSerializer(read_only=True)
     address = AddressSerializer(read_only=True)
 
     class Meta:
         model = Details
         fields = ['id', 'name', 'fatherName', 'dob', 'domicile', 'religion',
-                  'image', 'courseCategory', 'user', 'phoneNumbers', 'address']
+                  'image', 'courseCategory', 'user', 'phoneNumber', 'address']
         read_only_fields = ('id', 'name', 'fatherName',
                             'dob', 'domicile', 'religion', 'image')
