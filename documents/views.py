@@ -2,11 +2,16 @@ from rest_framework import viewsets, mixins
 from .serializers import DocumentsSerializer
 from .models import Documents
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Create your views here.
 
 
 class DocumentsView(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins.UpdateModelMixin):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     serializer_class = DocumentsSerializer
     queryset = Documents.objects.all()
