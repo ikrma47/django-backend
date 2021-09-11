@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins, status
 from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -9,10 +9,10 @@ from rest_framework.response import Response
 
 # Create your views here.
 
-class ExperienceViewSet(viewsets.ModelViewSet):
+class ExperienceViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.DestroyModelMixin):
 
-    permission_classes = [JWTAuthentication]
-    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
@@ -32,4 +32,26 @@ class ExperienceViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         instances = self.get_object()
         serializer = self.get_serializer(instance=instances, many=True)
-        return Response(data=serializer.data)
+        return Response(data={
+            'success': True,
+            'message': 'Experience fetched successfully',
+            'data': serializer.data
+        })
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT, data={
+            'success': True,
+            'message': "Experience deleted successfully",
+            'data': []
+        })
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        self.action = 'retrieve'
+        self.kwargs[self.lookup_field] = serializer.data['user']
+        return self.retrieve(request, args, kwargs)

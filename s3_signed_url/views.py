@@ -10,11 +10,16 @@ from helper.functions import create_presigned_url
 
 class GetPreSignedUrl(APIView):
 
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes=[IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     http_method_names = ['post']
 
     def post(self, request, fromat=None):
-        response = create_presigned_url(request.data['fileName'])
-        return Response(status=HTTP_200_OK, data=response)
+        response = create_presigned_url(
+            request.data['fileName'], request.data['fileType'])
+        return Response(status=HTTP_200_OK, data={
+            'success': True,
+            'message': 'signed url obtained',
+            'data': [response]
+        })
