@@ -2,6 +2,7 @@ from admin_dashboard.serializers import AdminDashboardSerializer
 from rest_framework import viewsets, mixins
 from rest_framework.response import Response
 from user_details.models import Details
+from .filters import CandidateFilter
 
 # Create your views here.
 
@@ -10,6 +11,7 @@ class AdminDashboardView(viewsets.GenericViewSet, mixins.ListModelMixin):
 
     queryset = Details.objects.all()
     serializer_class = AdminDashboardSerializer
+    filterset_class = CandidateFilter
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
