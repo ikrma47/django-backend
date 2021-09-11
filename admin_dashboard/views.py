@@ -3,11 +3,17 @@ from rest_framework import viewsets, mixins
 from rest_framework.response import Response
 from user_details.models import Details
 from .filters import CandidateFilter
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from django_backend.permissions import IsAdmin
 
 # Create your views here.
 
 
 class AdminDashboardView(viewsets.GenericViewSet, mixins.ListModelMixin):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsAdmin]
 
     queryset = Details.objects.all()
     serializer_class = AdminDashboardSerializer
