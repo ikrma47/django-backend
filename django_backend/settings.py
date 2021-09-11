@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import dj_database_url
 from pathlib import Path
 from datetime import timedelta
 import environ
@@ -123,16 +124,18 @@ WSGI_APPLICATION = 'django_backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'HOST': env('DATABASE_HOST'),
-        'PORT': env('DATABASE_PORT'),
-        'PASSWORD': env('DATABASE_PASSWORD')
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': env('DATABASE_NAME'),
+    #     'USER': env('DATABASE_USER'),
+    #     'HOST': env('DATABASE_HOST'),
+    #     'PORT': env('DATABASE_PORT'),
+    #     'PASSWORD': env('DATABASE_PASSWORD')
+    # }
 }
 
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'] = dj_database_url.config(conn_max_age=500)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
