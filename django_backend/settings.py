@@ -16,8 +16,6 @@ from datetime import timedelta
 import environ
 import django_heroku
 
-django_heroku.settings(locals())
-
 env = environ.Env()
 environ.Env.read_env()
 
@@ -141,6 +139,7 @@ DATABASES = {
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'] = dj_database_url.config(conn_max_age=500)
 
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -189,3 +188,8 @@ BUCKET_NAME = env('BUCKET_NAME')
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_REGION_NAME = env('AWS_REGION_NAME')
+
+
+django_heroku.settings(locals())
+if env('ENV') == 'development':
+    del DATABASES['default']['OPTIONS']['sslmode']
